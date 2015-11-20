@@ -49,6 +49,9 @@ void CommandInjection::updateHook()
         if(_cmd_injection.readNewest(cmd_injection) == RTT::NewData)
             newest_injection_sample = base::Time::now();
 
+        if(cmd.time.isNull())
+            cmd.time = cmd_injection.time;
+
         if((base::Time::now() - newest_injection_sample).toSeconds() <= _cmd_injection_timeout.value())
         {
             for(unsigned i = 0; i < 3; i++)
